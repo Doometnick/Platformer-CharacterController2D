@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class PlatformController : RaycastController
 {
-
     public LayerMask passengerMask;
 
     public Vector3[] localWaypoints;
@@ -57,7 +56,7 @@ public class PlatformController : RaycastController
     Vector3 CalculatePlatformMovement()
     {
 
-        if (Time.time < nextMoveTime || localWaypoints.Length == 0)
+        if (Time.time < nextMoveTime)
         {
             return Vector3.zero;
         }
@@ -125,7 +124,7 @@ public class PlatformController : RaycastController
                 rayOrigin += Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, passengerMask);
 
-                if (hit)
+                if (hit && hit.distance != 0)
                 {
                     if (!movedPassengers.Contains(hit.transform))
                     {
@@ -150,7 +149,7 @@ public class PlatformController : RaycastController
                 rayOrigin += Vector2.up * (horizontalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right * directionX, rayLength, passengerMask);
 
-                if (hit)
+                if (hit && hit.distance != 0)
                 {
                     if (!movedPassengers.Contains(hit.transform))
                     {
@@ -174,7 +173,7 @@ public class PlatformController : RaycastController
                 Vector2 rayOrigin = raycastOrigins.topLeft + Vector2.right * (verticalRaySpacing * i);
                 RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, passengerMask);
 
-                if (hit)
+                if (hit && hit.distance != 0)
                 {
                     if (!movedPassengers.Contains(hit.transform))
                     {
@@ -220,4 +219,5 @@ public class PlatformController : RaycastController
             }
         }
     }
+
 }
